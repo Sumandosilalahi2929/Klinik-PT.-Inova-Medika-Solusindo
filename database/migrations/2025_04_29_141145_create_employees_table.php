@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255)->notNullable();
             $table->string('position', 255)->notNullable();
-            $table->foreignId('regions_id')->constrained('regions')->onDelete('cascade');
             $table->timestamps();
         });
     }

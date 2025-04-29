@@ -10,7 +10,7 @@ class Drug extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function patient_medication()
+    public function Patient_medication()
     {
         return $this->hasMany(Patient_medication::class);
     }

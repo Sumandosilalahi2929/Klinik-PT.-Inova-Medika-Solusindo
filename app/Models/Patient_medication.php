@@ -11,12 +11,19 @@ class Patient_medication extends Model
 
     protected $guarded = [];
 
+
     public function visit()
     {
-        return $this->belongsTo(visit::class);
+        return $this->belongsTo(Visit::class, 'visits_id');
     }
+
     public function drug()
     {
-        return $this->belongsTo(drug::class);
+        return $this->belongsTo(Drug::class, 'drugs_id');
+    }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patients_id');
     }
 }

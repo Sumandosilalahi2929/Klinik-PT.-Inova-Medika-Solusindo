@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255)->notNullable();
-            $table->string('address', 255)->notNullable();
-            $table->string('number_phone', 15)->notNullable();
-            $table->foreignId('regions_id')->constrained('regions')->onDelete('cascade');
+            $table->string('name', 255);
+            $table->string('address', 255);
+            $table->string('number_phone', 15);
+            $table->string('region', 255);
             $table->timestamps();
         });
     }
