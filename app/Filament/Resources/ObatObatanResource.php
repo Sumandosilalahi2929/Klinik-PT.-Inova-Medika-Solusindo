@@ -13,10 +13,12 @@ use Filament\Tables\Table;
 class ObatObatanResource extends Resource
 {
     protected static ?string $model = Obat_obatan::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationLabel = 'Obat-Obatan';
+    protected static ?string $navigationLabel = 'Manajemen Obat';
     protected static ?string $pluralLabel = 'Obat-Obatan';
+    protected static ?string $modelLabel = 'Obat';
+    protected static ?string $slug = 'obat';
+    protected static ?int $navigationSort = 30;
 
     public static function form(Form $form): Form
     {
@@ -82,6 +84,12 @@ class ObatObatanResource extends Resource
         return [
             // Relations to Obat_pasien, if needed
         ];
+    }
+
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin']);
     }
 
     public static function getPages(): array

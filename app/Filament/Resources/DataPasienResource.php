@@ -14,7 +14,12 @@ class DataPasienResource extends Resource
 {
     protected static ?string $model = Data_pasien::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationLabel = 'Data Pasien';
+    protected static ?string $pluralLabel = 'Pasien';
+    protected static ?string $navigationGroup = 'Manajemen Klinik';
+    protected static ?int $navigationSort = 1;
+    protected static ?string $modelLabel = 'Pasien';
 
     public static function form(Form $form): Form
     {
@@ -101,6 +106,10 @@ class DataPasienResource extends Resource
         return [
             // Define any relationships (if applicable)
         ];
+    }
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin', 'dokter', 'pendaftaran']);
     }
 
     public static function getPages(): array

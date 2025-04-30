@@ -18,6 +18,12 @@ class ObatPasienResource extends Resource
     protected static ?string $model = Obat_pasien::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Obat Pasien';
+    protected static ?string $pluralLabel = 'Obat Pasien';
+    protected static ?string $modelLabel = 'Obat Pasien';
+    protected static ?string $slug = 'obat-pasien';
+    protected static ?int $navigationSort = 35;
+
 
     public static function form(Form $form): Form
     {
@@ -113,11 +119,17 @@ class ObatPasienResource extends Resource
             ]);
     }
 
+
     public static function getRelations(): array
     {
         return [
             // Tambahkan relasi jika diperlukan
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin', 'kasir']);
     }
 
     public static function getPages(): array

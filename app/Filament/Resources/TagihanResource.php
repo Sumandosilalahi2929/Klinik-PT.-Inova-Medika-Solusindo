@@ -18,6 +18,11 @@ class TagihanResource extends Resource
     protected static ?string $model = Kunjungan::class;
     protected static ?string $navigationIcon = 'heroicon-o-receipt-percent';
     protected static ?string $navigationLabel = 'Tagihan Pasien';
+    protected static ?string $pluralLabel = 'Tagihan';
+    protected static ?string $modelLabel = 'Tagihan';
+    protected static ?string $slug = 'tagihan-pasien';
+    protected static ?int $navigationSort = 40;
+
 
     public static function form(Form $form): Form
     {
@@ -67,6 +72,11 @@ class TagihanResource extends Resource
                     ->label('Filter Pasien')
                     ->options(Data_pasien::pluck('nama', 'id')),
             ]);
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin', 'kasir']);
     }
 
     public static function getPages(): array

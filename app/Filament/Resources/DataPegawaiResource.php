@@ -17,7 +17,10 @@ class DataPegawaiResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationLabel = 'Data Pegawai';
     protected static ?string $pluralLabel = 'Pegawai';
+    protected static ?string $modelLabel = 'Pegawai';
     protected static ?string $slug = 'pegawai';
+    protected static ?string $navigationGroup = 'Manajemen Klinik';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -98,6 +101,11 @@ class DataPegawaiResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin']);
     }
 
     public static function getPages(): array

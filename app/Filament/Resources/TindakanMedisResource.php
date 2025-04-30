@@ -16,6 +16,11 @@ class TindakanMedisResource extends Resource
 {
     protected static ?string $model = Tindakan_medis::class;
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
+    protected static ?string $navigationLabel = 'Tindakan Medis';
+    protected static ?string $pluralLabel = 'Tindakan Medis';
+    protected static ?string $modelLabel = 'Tindakan';
+    protected static ?string $slug = 'tindakan-medis';
+    protected static ?int $navigationSort = 25;
 
     public static function form(Form $form): Form
     {
@@ -84,6 +89,11 @@ class TindakanMedisResource extends Resource
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin', 'dokter']);
     }
 
     public static function getPages(): array

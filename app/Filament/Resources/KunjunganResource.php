@@ -19,6 +19,10 @@ class KunjunganResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
     protected static ?string $navigationLabel = 'Data Kunjungan';
     protected static ?string $pluralLabel = 'Kunjungan';
+    protected static ?string $modelLabel = 'Kunjungan';
+    protected static ?string $slug = 'kunjungan';
+    protected static ?string $navigationGroup = 'Transaksi Pasien';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -101,6 +105,18 @@ class KunjunganResource extends Resource
             //
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin', 'dokter', 'pendaftaran']);
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()->hasRole('admin'); // cuma admin yang bisa create
+    }
+
+
 
     public static function getPages(): array
     {
