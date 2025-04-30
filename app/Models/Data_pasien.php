@@ -14,6 +14,6 @@ class Data_pasien extends Model
 
     public function kunjungan()
     {
-        return $this->hasMany(Kunjungan::class);
+        return $this->hasMany(Kunjungan::class, 'kunjungans_id');
     }
 }

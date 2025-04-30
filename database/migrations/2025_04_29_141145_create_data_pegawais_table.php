@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('data_pegawais', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('nip')->unique()->nullable();
+            $table->string('nip', 18)->unique()->nullable();
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('jabatan');
             $table->string('no_hp', 15);

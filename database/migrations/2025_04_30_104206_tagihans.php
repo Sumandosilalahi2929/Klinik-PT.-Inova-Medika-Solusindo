@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('tagihans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kunjungans_id')->constrained('kunjungans')->onDelete('cascade'); // Menghubungkan dengan tabel kunjungan
-            $table->decimal('total_tagihan', 10, 2);
+            $table->foreignId('data_pasiens_id')->constrained('data_pasiens')->onDelete('cascade');
+            $table->foreignId('obat_pasiens_id')->constrained('obat_pasiens')->onDelete('cascade');
+            $table->foreignId('kunjungans_id')->constrained('kunjungans')->onDelete('cascade');
+            $table->decimal('total_amount', 10, 2);
             $table->enum('status', ['dibayar', 'belum_dibayar']);
             $table->timestamps();
         });

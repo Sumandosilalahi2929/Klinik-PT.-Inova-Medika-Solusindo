@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tindakan_medis', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('data_pasiens_id')->constrained()->onDelete('cascade');
+            $table->foreignId('kunjungans_id')->constrained()->onDelete('cascade');
             $table->string('name_actions', 255)->notNullable();
             $table->decimal('price', 10, 2);
             $table->timestamps();

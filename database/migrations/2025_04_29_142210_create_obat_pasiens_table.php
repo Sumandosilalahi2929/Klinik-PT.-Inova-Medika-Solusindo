@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('obat_pasiens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('data_pasiens_id')->constrained('data_pasiens')->onDelete('cascade');
-            $table->foreignId('kunjungans_id')->constrained('kunjungans')->onDelete('cascade');
+            $table->foreignId('kunjungans_id')->nullable()->constrained('kunjungans')->onDelete('cascade');
             $table->foreignId('obat_obatans_id')->constrained('obat_obatans')->onDelete('cascade');
             $table->string('catatan')->nullable();
             $table->string('dosis');

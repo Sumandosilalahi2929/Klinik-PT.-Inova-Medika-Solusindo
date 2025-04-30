@@ -10,12 +10,10 @@ class Kunjungan extends Model
     use HasFactory;
     protected $guarded = [];
 
-    // Relasi untuk pasien
-    public function patient()
+    public function data_pasien()
     {
         return $this->belongsTo(Data_pasien::class, 'data_pasiens_id');
     }
-
 
     public function data_pegawai()
     {
