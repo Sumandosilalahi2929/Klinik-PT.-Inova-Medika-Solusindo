@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('tindakan_medis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patients_id')->constrained('patients')->onDelete('cascade');
-            $table->foreignId('employees_id')->constrained('employees')->onDelete('cascade');
-            $table->timestamp('date_visit');
-            $table->enum('type_visit', ['umum', 'laboratorium']);
+            $table->string('name_actions', 255)->notNullable();
+            $table->decimal('price', 10, 2);
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('tindakan_medis');
     }
 };

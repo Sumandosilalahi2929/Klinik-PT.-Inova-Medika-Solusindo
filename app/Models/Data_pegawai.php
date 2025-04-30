@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Patient extends Model
+class Data_pegawai extends Model
 {
     use HasFactory;
-
     protected $guarded = [];
 
 
-    public function visit()
+    public function kunjungan()
     {
-        return $this->hasMany(visit::class);
+        return $this->hasMany(Kunjungan::class);
     }
 }

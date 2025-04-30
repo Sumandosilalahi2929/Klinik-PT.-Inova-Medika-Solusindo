@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bill extends Model
+class Data_pasien extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function visit()
+
+    public function kunjungan()
     {
-        return $this->belongsTo(visit::class);
+        return $this->hasMany(Kunjungan::class);
     }
 }
