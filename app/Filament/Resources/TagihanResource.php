@@ -7,11 +7,13 @@ use App\Models\Data_pasien;
 use App\Models\Kunjungan;
 use App\Models\Tindakan_medis;
 use App\Models\Obat_pasien;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\Action;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class TagihanResource extends Resource
 {
@@ -22,7 +24,6 @@ class TagihanResource extends Resource
     protected static ?string $modelLabel = 'Tagihan';
     protected static ?string $slug = 'tagihan-pasien';
     protected static ?int $navigationSort = 40;
-
 
     public static function form(Form $form): Form
     {
@@ -48,7 +49,7 @@ class TagihanResource extends Resource
                     }),
 
                 Tables\Columns\TextColumn::make('total_obat')
-                    ->label('Harga')
+                    ->label('Harga Obat')
                     ->money('IDR', true)
                     ->getStateUsing(function ($record) {
                         return Obat_pasien::where('kunjungans_id', $record->id)
@@ -71,6 +72,36 @@ class TagihanResource extends Resource
                 Tables\Filters\SelectFilter::make('data_pasiens_id')
                     ->label('Filter Pasien')
                     ->options(Data_pasien::pluck('nama', 'id')),
+            ])
+            ->actions([
+                Action::make('exportPdf')
+                    ->label('Export PDF')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('primary')
+                    ->action(function (Kunjungan $record) {
+                        $pasien = $record->data_pasien;
+                        $tindakan = Tindakan_medis::where('kunjungans_id', $record->id)->get();
+                        $obat = Obat_pasien::where('kunjungans_id', $record->id)
+                            ->join('obat_obatans', 'obat_obatans.id', '=', 'obat_obatans_id')
+                            ->get(['obat_obatans.nama', 'obat_obatans.harga']);
+
+                        $totalTindakan = $tindakan->sum('price');
+                        $totalObat = $obat->sum('harga');
+                        $total = $totalTindakan + $totalObat;
+
+                        $pdf = Pdf::loadView('pdf.tagihan', [
+                            'pasien' => $pasien,
+                            'kunjungan' => $record,
+                            'tindakan' => $tindakan,
+                            'obat' => $obat,
+                            'total' => $total,
+                        ]);
+
+                        return response()->streamDownload(
+                            fn() => print($pdf->stream()),
+                            'tagihan_' . $pasien->nama . '.pdf'
+                        );
+                    }),
             ]);
     }
 

@@ -53,7 +53,6 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->font('Poppins')
-
             ->colors([
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,
